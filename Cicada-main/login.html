@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRACK CICADA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-xr0q4CC6OXVSm9XQAtgkj+HyI5PMT+ln4ifRksI2UCUgwe2z1DEIbRTFVfc6kQEKYYoITFgrOydIPc4plOqO5A==" crossorigin="anonymous" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://securitytoday.com/-/media/SEC/Security-Products/Images/2019/09/IPAddress.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        #login-box {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out; 
+            position: relative; 
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #555;
+        }
+
+        #error-message,
+        #welcome-message,
+        #additional-message {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        button {
+            width: calc(100% - 20px);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out; 
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="login-box">
+    <img src="cicada_gform.png" alt="Logo" class="logo"> 
+    <h2 style="color: #333;">Chaos The Prelude</h2>
+    <input type="text" id="token" placeholder="Token Number">
+    <div style="position: relative;">
+        <input type="password" id="password" placeholder="Generated Password">
+        <span id="eye-icon" class="fas fa-eye-slash" onclick="togglePasswordVisibility()"></span>
+    </div>
+    <button onclick="authenticate()">Login</button>
+    <p id="error-message" style="color: red;"></p>
+    <p id="welcome-message" style="color: green;"></p>
+    <p id="additional-message" style="color: rgb(0, 0, 0);">Obtain the password from the registration desk!</p>
+</div>
+
+<script>
+    const sheetDBApiEndpoint = 'https://sheetdb.io/api/v1/3758il769pi1x';
+
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('password');
+        passwordField.type = (passwordField.type === 'password') ? 'text' : 'password';
+    }
+
+    function authenticate() {
+        const token = document.getElementById('token').value;
+        const password = document.getElementById('password').value;
+
+        document.getElementById('error-message').innerText = '';
+        document.getElementById('welcome-message').innerText = '';
+
+        fetch(`${sheetDBApiEndpoint}/search?token=${token}&generatedPassword=${password}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('API Response:', data);
+                if (data.length > 0) {
+                    document.getElementById('welcome-message').innerText = 'Welcome to Cicada 2023';
+                   
+                    window.location.href = 'hack.html';
+                } else {
+                    document.getElementById('error-message').innerText = 'Invalid credentials';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('error-message').innerText = 'An error occurred. Please try again.';
+            });
+    }
+</script>
+
+</body>
+</html>
